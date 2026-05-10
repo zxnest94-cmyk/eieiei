@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>มีอะไรจะบอกแหละ</title>
+    <style>
+        /* สไตล์หน้าเว็บ */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #424242; 
+            font-family: 'Kanit', sans-serif;
+            overflow: hidden;
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            max-width: 80%;
+            transition: all 0.5s ease;
+        }
+
+        h 5 {
+            color: #cfd8dc;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background-color: #757575;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 15px rgba(255, 143, 163, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #ff758f;
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ใส่ลูกเล่นจางหาย */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="box">
+        <h3 id="text" class="fade-in">ลองกดอ่านดูสิ</h3>
+        <button class="btn" onclick="nextMessage()" id="nextBtn">ไปต่อ</button>
+    </div>
+
+  <script>
+    const messages = [
+        "ถึงเพื่อนกูเอง",
+        `ถ้ามึงกำลังกดอ่านอยู่ตรงนี้ ก็คงเป็นเพราะมึงสำคัญกับกูจริงๆแหละ
+กูไม่รู้จะเริ่มยังไงดี เพราะปกติกูก็ไม่ใช่คนพูดอะไรซึ้งๆเก่ง แต่ก็อยากทำอันนี้ไว้ให้มึงอ่าน`,
+        "ขอบคุณนะ ที่อยู่มาจนถึงตอนนี้ ถึงจะพึ่งรู้จักกัน",
+        "ขอบคุณทุกครั้งที่คอยฟัง คอยอยู่ข้างๆ",
+        "กูอาจไม่ได้พูดบ่อย แต่กูดีใจนะที่ได้รู้จักมึง ",
+        "ดีใจที่ชีวิตกูมีมึงอยู่ในนั้น ",
+        "แล้วก็…",
+        "ไม่ว่าต่อไปจะเป็นยังไง",
+        "กูหวังว่ามึงจะยิ้มเยอะๆ เจอแต่เรื่องดีๆ และมีความสุขกับชีวิตของมึงนะ",
+        "จากเพื่อนคนนึง ที่โคตรดีใจเลยที่มีมึง",
+    ];
+
+    let currentIndex = 0;
+
+    function nextMessage() {
+        const textElement = document.getElementById('text');
+        const btnElement = document.getElementById('nextBtn');
+
+        if (currentIndex < messages.length) {
+            // 1. แสดงข้อความปัจจุบันก่อน
+            textElement.innerText = messages[currentIndex];
+            
+            // 2. เล่น Animation
+            textElement.classList.remove('fade-in');
+            void textElement.offsetWidth; // trigger reflow
+            textElement.classList.add('fade-in');
+
+            // 3. ขยับไปข้อความถัดไป
+            currentIndex++;
+            
+            // 4. เช็คว่าถ้าถึงข้อความสุดท้ายให้เปลี่ยนชื่อปุ่ม
+            if (currentIndex === messages.length) {
+                btnElement.innerText = "เริ่มต้นใหม่";
+            } else {
+                btnElement.innerText = "ไปต่อ";
+            }
+        } else {
+            // ถ้ากดจนครบแล้ว กลับไปเริ่มใหม่
+            currentIndex = 0;
+            textElement.innerText = "ลองกดอ่านดูสิ ☁️";
+            btnElement.innerText = "ไปต่อ";
+        }
+    }
+</script>
